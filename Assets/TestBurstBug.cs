@@ -20,7 +20,7 @@ public class TestBurstBug : MonoBehaviour
 
         public override string ToString()
         {
-            return $"({X},{Y},{Z})";
+            return $"({X})";
         }
     }
 
