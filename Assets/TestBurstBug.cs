@@ -8,7 +8,29 @@ public class TestBurstBug : MonoBehaviour
 {
     public struct Data : IComponentData
     {
-        public ulong Value;
+        public MyVector Value1;
+        public MyVector Value2;
+    }
+
+    public struct MyVector
+    {
+        public long X;
+        public long Y;
+        public long Z;
+
+        public override string ToString()
+        {
+            return $"({X},{Y},{Z})";
+        }
+    }
+
+    public static MyVector UpdateMyVector(MyVector value)
+    {
+        value = new MyVector
+        {
+            X = value.X + 5678,
+        };
+        return value;
     }
 
     public class TestBurstComponentSystem : JobComponentSystem
@@ -18,7 +40,7 @@ public class TestBurstBug : MonoBehaviour
         {
             public void Execute(ref Data data)
             {
-                data.Value = uint.MaxValue;
+                data.Value2 = UpdateMyVector(data.Value1);
             }
         }
 
@@ -46,12 +68,12 @@ public class TestBurstBug : MonoBehaviour
             for (var i = 0; i < m_input.Length; i++)
             {
                 var data = m_input.DataArray[i];
-                TestBurstBug.MaxUInt32Output.text = data.Value.ToString();
+                TestBurstBug.OutputText.text = $"{data.Value2}";
             }
         }
     }
 
-    public Text MaxUInt32Output;
+    public Text OutputText;
 
     private void Start()
     {

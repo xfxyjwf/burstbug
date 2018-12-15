@@ -1,6 +1,8 @@
 .vs/
 Assembly-CSharp.csproj
 Burst Bug.sln
+burstbug.sln
 Library/
 Logs/
 obj/
+Temp/
